@@ -26,6 +26,8 @@ app.get('/sales', rescue(salesController.getAll));
 
 app.get('/sales/:id', rescue(salesController.getById));
 
+app.put('/products/:id', rescue(productsController.update));
+
 app.use(errorMiddleware);
 
 // não remova essa exportação, é para o avaliador funcionar

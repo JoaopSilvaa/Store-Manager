@@ -24,7 +24,7 @@ const getById = async (id) => {
 };
 
 const create = async ({ name }) => {
-  if (name.lenght < 5) {
+  if (name.length < 5) {
     return {
       error: {
         code: 'unprocessable',
@@ -37,8 +37,30 @@ const create = async ({ name }) => {
   return product;
 };
 
+const update = async (id, name) => {
+  const product = getById(id);
+  
+  if (product.error) {
+    return product;
+  }
+
+  if (name.length < 5) {
+    console.log('alo');
+    return {
+      error: {
+        code: 'unprocessable',
+        message: '"name" length must be at least 5 characters long',
+      },
+    };
+  }
+
+  const newProduct = await productsModel.update(id, name);
+  return newProduct;
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };

@@ -38,8 +38,30 @@ const create = async (req, res, next) => {
   return res.status(201).json(newProduct);
 };
 
+const update = async (req, res, next) => {
+  const { name } = req.body;
+  const { id } = req.params;
+
+  const { error } = Joi.object({
+    name: Joi.string().required(),
+  }).validate({ name });
+
+  if (error) {
+    return next(error);
+  }
+
+  const product = await productsService.getById(id);
+  if (product.error) return next(product.error);
+
+  const newProduct = await productsService.update(id, name);
+  if (newProduct.error) return next(newProduct.error);
+
+  return res.status(200).json(newProduct);
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };
