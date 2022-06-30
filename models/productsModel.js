@@ -44,10 +44,13 @@ const exclude = async (id) => {
   );
 };
 
+const searchForName = async () => getAll();
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
   exclude,
+  searchForName,
 };

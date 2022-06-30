@@ -67,10 +67,19 @@ const exclude = async (id) => {
   return true;
 };
 
+const searchForName = async (q) => {
+  const result = await productsModel.searchForName();
+  
+  const filteredName = result.filter((product) => product.name.includes(q));
+
+  return filteredName;
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
   exclude,
+  searchForName,
 };
