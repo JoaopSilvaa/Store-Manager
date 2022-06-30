@@ -51,8 +51,17 @@ const getById = async (id) => {
   return result.map(serializeWithoutId);
 };
 
+const update = async (itemSold) => {
+  const { productId, quantity } = itemSold;
+  await connection.execute(
+    'UPDATE StoreManager.sales_products SET quantity=? WHERE product_id=?;',
+    [quantity, productId],
+  );
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

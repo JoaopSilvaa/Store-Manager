@@ -95,9 +95,25 @@ const exclude = async (id) => {
   return true;
 };
 
+const update = async (id, itemsSold) => {
+  const sales = await getById(id);
+
+  if (sales.error) {
+    return sales;
+  }
+
+  const items = await Promise.all(itemsSold.map((item) => valids(item)));
+  const error = items.find((item) => item !== undefined);
+  if (error) return error;
+  await salesModel.update(id);
+  await Promise.all(itemsSold.map((item) => salesProductsModel.update(item)));
+  return { saleId: Number(id), itemsUpdated: itemsSold };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   exclude,
+  update,
 };

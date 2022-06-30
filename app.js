@@ -30,6 +30,8 @@ app.put('/products/:id', rescue(productsController.update));
 
 app.delete('/products/:id', rescue(productsController.exclude));
 
+app.put('/sales/:id', rescue(salesController.update));
+
 app.delete('/sales/:id', rescue(salesController.exclude));
 
 app.use(errorMiddleware);
