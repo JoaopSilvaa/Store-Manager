@@ -3,6 +3,15 @@ const salesModel = require('../models/salesModel');
 const productsModel = require('../models/productsModel');
 
 const validProduct = async ({ productId }) => {
+  if (!productId) {
+    return {
+      error: {
+        code: 'badRequest',
+        message: '"productId" is required',
+      },
+    };
+  }
+
   const product = await productsModel.getById(productId);
   if (!product) {
     return {
@@ -24,6 +33,16 @@ const validQuantity = ({ quantity }) => {
         },
       };
     }
+  
+  if (!quantity) {
+    return {
+      error: {
+        code: 'badRequest',
+        message: '"quantity" is required',
+      },
+    };
+  }
+  
     return true;
 };
 
@@ -32,13 +51,14 @@ const valids = async (item) => {
   const validateQuantity = await validQuantity(item);
   if (validateProduct !== true) return validateProduct;
   if (validateQuantity !== true) return validateQuantity;
-  console.log('alo');
-  return salesProductsModel.create(item);
 };
+
 const create = async (itemsSold) => {
+  const items = await Promise.all(itemsSold.map((item) => valids(item)));
+  const error = items.find((item) => item !== undefined);
+  if (error) return error;
   const { id } = await salesModel.create();
-  const items = itemsSold.map((item) => valids(item));
-  console.log(items);
+  await Promise.all(itemsSold.map((item) => salesProductsModel.create(id, item)));
   return ({ id, itemsSold });
 };
 

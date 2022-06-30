@@ -45,7 +45,6 @@ const update = async (id, name) => {
   }
 
   if (name.length < 5) {
-    console.log('alo');
     return {
       error: {
         code: 'unprocessable',

@@ -1,19 +1,7 @@
-const Joi = require('joi');
 const salesService = require('../services/salesService');
 
 const create = async (req, res, next) => {
   const itemsSold = req.body;
-  itemsSold.forEach((item) => {
-    const { error } = Joi.object({
-      productId: Joi.number().integer().required(),
-      quantity: Joi.number().integer().required(),
-    }).validate(item);
-  
-    if (error) {
-      return next(error);
-    }
-  });
-  
   const newItemSold = await salesService.create(itemsSold);
 
   if (newItemSold.error) return next(newItemSold.error);
