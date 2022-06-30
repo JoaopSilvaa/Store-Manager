@@ -85,8 +85,19 @@ const getById = async (id) => {
   return sales;
 };
 
+const exclude = async (id) => {
+  const sales = await getById(id);
+
+  if (sales.error) {
+    return sales;
+  }
+  await salesModel.exclude(id);
+  return true;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  exclude,
 };

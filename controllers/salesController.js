@@ -29,8 +29,18 @@ const getById = async (req, res, next) => {
   return res.status(200).json(sale);
 };
 
+const exclude = async (req, res, next) => {
+  const { id } = req.params;
+
+  const deletedSales = await salesService.exclude(id);
+  if (deletedSales !== true) return next(deletedSales.error);
+
+  return res.status(204).send();
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  exclude,
 };

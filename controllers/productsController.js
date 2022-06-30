@@ -62,8 +62,8 @@ const update = async (req, res, next) => {
 const exclude = async (req, res, next) => {
   const { id } = req.params;
 
-  const newProduct = await productsService.exclude(id);
-  if (newProduct !== true) return next(newProduct.error);
+  const deletedProduct = await productsService.exclude(id);
+  if (deletedProduct !== true) return next(deletedProduct.error);
 
   return res.status(204).send();
 };

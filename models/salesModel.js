@@ -5,6 +5,11 @@ const create = async () => {
   return { id: result.insertId };
 };
 
+const exclude = async (id) => {
+  await connection.execute('DELETE FROM StoreManager.sales WHERE id=?', [id]);
+};
+
 module.exports = {
   create,
+  exclude,
 };

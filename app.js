@@ -30,6 +30,8 @@ app.put('/products/:id', rescue(productsController.update));
 
 app.delete('/products/:id', rescue(productsController.exclude));
 
+app.delete('/sales/:id', rescue(salesController.exclude));
+
 app.use(errorMiddleware);
 
 // não remova essa exportação, é para o avaliador funcionar
