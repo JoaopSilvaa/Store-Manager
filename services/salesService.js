@@ -116,4 +116,5 @@ module.exports = {
   getById,
   exclude,
   update,
+  valids,
 };
